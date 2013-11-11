@@ -1,0 +1,37 @@
+{
+    "name": "ender-package"
+  , "description": "Package handling for the Ender CLI"
+  , "version": "0.0.3-dev"
+  , "authors": [
+        "Rod Vagg @rvagg <rod@vagg.org> (https://github.com/rvagg)"
+      , "Dustin Diaz @ded <dustin@obvious.com> (https://github.com/ded)"
+      , "Jacob Thornton @fat <jacob@twitter.com> (https://github.com/fat)"
+      , "Andrew McCollum (https://github.com/amccollum)"
+    ]
+  , "keywords": []
+  , "main": "./lib/index.js"
+  , "homepage": "https://ender.jit.su"
+  , "dependencies": {
+        "ender-repository" : "*"
+        
+      , "archy"            : "~0.0.2"
+      , "async"            : "~0.2.9"
+      , "colors"           : "~0.6.2"
+      , "errno"            : "~0.0.3"
+      , "glob"             : "~3.1.14"
+    }
+  , "devDependencies": {
+        "bustermove"  : "*"
+      , "mkfiletree"  : "*"
+      , "tap"         : "*"
+      , "referee"     : "*"
+      , "xregexp"     : "~2.0.0"
+    }
+  , "scripts": {
+        "test"        : "tap test/*-test.js"
+    }
+  , "repository": {
+        "type"        : "git"
+      , "url"         : "https://github.com/ender-js/ender-package.git"
+    }
+}
