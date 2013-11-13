@@ -7,12 +7,6 @@ A component of the [Ender CLI](https://github.com/ender-js/Ender/), providing an
 For more information check out [http://ender.jit.su](http://ender.jit.su)
 
 ## API
-  loadPackage       : loadPackage
-, unloadPackage     : unloadPackage
-, findPackage       : findPackage
-, walkDependencies  : walkDependencies
-, buildArchyTree    : buildArchyTree
-, LocalPackage      : LocalPackage
 
 ### loadPackage(root, callback)
 `loadPackage()` will attempt to load the package located at the given root directory. It will try to read the package descriptor (including applying Ender-specific overrides) and then, if successful, return the LocalPackage object through the callback.
@@ -24,20 +18,20 @@ For more information check out [http://ender.jit.su](http://ender.jit.su)
 
 -------------------------
 
-### findPackage(name, root, callback)
-`findPackage()` is similar to `loadPackage()`, except that instead of taking a package root directory, it is passed a package name, which it will attempt to find using the standard Node search algorithm, walking up the directory tree from the given root directory to see if it can find the package in any parent, or any 'node_modules' directory.
+### findPackage(id, root, callback)
+`findPackage()` is similar to `loadPackage()`, except that instead of taking a package root directory, it is passed a package id, which it will attempt to find using the standard Node search algorithm, walking up the directory tree from the given root directory to see if it can find the package in any parent, or any 'node_modules' directory. If the package id includes a version, only packages which satisfy the version requirement will be returned.
 
 *NOTE: Since this attempts to load parent packages to see if they match the given name, those packages will become cached, and you may need to call `unloadPackage()` if those packages change.*
 
 -------------------------
 
-### walkDependencies(names, unique, strict, callback)
-`walkDependencies()` will find all the package names passed into it, as well as recursively loading all of their dependencies. The `unique` argument indicates whether duplicate packages with the same name (but perhaps different versions) should be returned. If the `strict` argument is true, any dependency that cannot be found will trigger an error. If the `strict` argument is false, missing dependencies will be collected and passed to the callback. If no error occurs (or `strict` is false), the callback will receive a list of LocalPackage objects found in depth-first order, as well as a list of missing dependencies.
+### walkDependencies(ids, unique, strict, callback)
+`walkDependencies()` will find all the package ids passed into it, as well as recursively loading all of their dependencies. The `unique` argument indicates whether duplicate packages with the same name (but perhaps different versions) should be filtered out. If the `strict` argument is true, any dependency that cannot be found will trigger an error. If the `strict` argument is false, missing dependencies will be collected and passed to the callback. If no error occurs (or `strict` is false), the callback will receive a list of LocalPackage objects in depth-first order, as well as a list of missing dependencies.
 
 -------------------------
 
-### buildArchyTree(name, pretty, callback)
-`archyTree()` will take a list of package names and returns through the callback an Archy tree showing the named packages and their dependencies. The `pretty` argument will add coloring to the output for display on the console.
+### buildArchyTree(ids, pretty, callback)
+`archyTree()` will take a list of package ids and returns through the callback an Archy tree showing the named packages and their dependencies. The `pretty` argument will add coloring to the output for display on the console.
 
 -------------------------
 
