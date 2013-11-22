@@ -31,7 +31,7 @@ var buster          = require('bustermove')
   , fs              = require('fs')
   , mkfiletree      = require('mkfiletree')
   , path            = require('path')
-  
+
   , LocalPackage    = require('../lib/local-package')
   , FilesystemError = require('errno').custom.FilesystemError
 
@@ -52,7 +52,7 @@ buster.testCase('LocalPackage', {
               }
           )
         }
-        
+
       , 'missing descriptor': function (done) {
           mkfiletree.makeTemp(
               'ender-test-local-package'
@@ -69,7 +69,7 @@ buster.testCase('LocalPackage', {
           )
         }
     }
-    
+
   , 'loadSources': {
         'default main': function (done) {
           mkfiletree.makeTemp(
@@ -317,7 +317,7 @@ buster.testCase('LocalPackage', {
                         , 'file3.js': '// file3.js contents'
                         , 'subdir3': {
                               'file4.js': '// file4.js contents'
-                        
+
                           }
                       }
                   } 
@@ -338,7 +338,7 @@ buster.testCase('LocalPackage', {
               }
           )
         }
-        
+
       , 'multiple calls to loadSources': function (done) {
           mkfiletree.makeTemp(
               'ender-test-local-package'
@@ -350,7 +350,7 @@ buster.testCase('LocalPackage', {
             , function (err, dir) {
                 refute(err)
                 var pkg = LocalPackage.create(dir)
-                
+
                 pkg.loadDescriptor(function (err) {
                   refute(err)
 
@@ -359,14 +359,14 @@ buster.testCase('LocalPackage', {
                     assert.equals(pkg.sources['foo'], '// foo.js contents')
                     assert.equals(Object.keys(pkg.sources).length, 1)
                   })
-                
+
                   // Change the files attribute and call again (shouldn't change sources)
                   pkg.descriptor.files = 'bar.js'
                   pkg.loadSources(function (err) {
                     refute(err)
                     assert.equals(pkg.sources['foo'], '// foo.js contents')
                     assert.equals(Object.keys(pkg.sources).length, 1)
-                    
+
                     // Once more after completion
                     pkg.loadSources(function (err) {
                       refute(err)
@@ -395,7 +395,7 @@ buster.testCase('LocalPackage', {
                   refute(err)
                   assert.equals(pkg.sources['foo'], '// foo.js contents')
                   assert.equals(Object.keys(pkg.sources).length, 1)
-                    
+
                   // Unload the package
                   pkg.unload()
                   pkg.loadDescriptor(function (err) {
@@ -444,7 +444,7 @@ buster.testCase('LocalPackage', {
           pkg.extendOptions(opts)
           assert.equals(opts, { foo: 'bar' }) // shoudn't be touched
         }
-  
+
       , 'test externs': function () {
           var pkg = LocalPackage.create('/whatevs')
             , opts = { foo: 'bar' }
@@ -457,7 +457,7 @@ buster.testCase('LocalPackage', {
       , 'test externs array over existing externs': function () {
           var pkg  = LocalPackage.create('/whatevs')
             , opts = { foo: 'bar', externs: [ 'existing1.js', 'existing2.js' ] }
-  
+
           pkg.descriptor = { externs: [ 'lib/foo.js', 'BOOM.js' ] }
           pkg.extendOptions(opts)
           assert.equals(opts, { foo: 'bar', externs: [

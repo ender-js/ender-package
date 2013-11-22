@@ -40,14 +40,14 @@ buster.testCase('PackageDescriptor', {
           })
         }
       }
-      
+
     , 'test missing "ender" property': function () {
         var packageDescriptor = PackageDescriptor.create({
             name: 'foobar!'
         })
         refute.defined(packageDescriptor.ender)
       }
-      
+
     , 'test noop "ender" property': function () {
         this.runTest(
             {
@@ -58,7 +58,7 @@ buster.testCase('PackageDescriptor', {
           , null
         )
       }
-      
+
     , 'test ender override "bridge" property': function () {
         this.runTest(
             {
@@ -69,7 +69,7 @@ buster.testCase('PackageDescriptor', {
           , 'yohoho'
         )
       }
-      
+
     , 'test "ender->name" property replaces non-existent root': function () {
         this.runTest(
             { ender: { name: 'yohoho' } }
@@ -77,7 +77,7 @@ buster.testCase('PackageDescriptor', {
           , 'yohoho'
         )
       }
-      
+
     , 'test "overlay->ender->name" property replaces non-existent root': function () {
         this.runTest(
             { overlay: { ender: { name: 'yohoho' } } }
@@ -85,7 +85,7 @@ buster.testCase('PackageDescriptor', {
           , 'yohoho'
         )
       }
-      
+
     , 'test standard name': function () {
         this.runTest(
             { name: 'foobar!' }
@@ -93,7 +93,7 @@ buster.testCase('PackageDescriptor', {
           , 'foobar!'
         )
       }
-      
+
     , 'test ender override name': function () {
         this.runTest(
             {
@@ -104,7 +104,7 @@ buster.testCase('PackageDescriptor', {
           , 'bam!'
         )
       }
-      
+
     , 'test ender override name wtih "overlay->ender"': function () {
         this.runTest(
             {
@@ -115,7 +115,7 @@ buster.testCase('PackageDescriptor', {
           , 'bam!'
         )
       }
-      
+
     , 'test standard dependencies': function () {
         var expected = { foo: '*', bar: '*' }
         this.runTest(
@@ -125,7 +125,7 @@ buster.testCase('PackageDescriptor', {
           , true
         )
       }
-      
+
     , 'test ender override dependencies': function () {
         var expected = { fat: '*', fatter: '*' }
         this.runTest(
@@ -138,7 +138,7 @@ buster.testCase('PackageDescriptor', {
           , true
         )
       }
-      
+
     , 'test ender override dependencies with "overlay->ender"': function () {
         var expected = { fat: '*', fatter: '*' }
         this.runTest(
@@ -151,7 +151,7 @@ buster.testCase('PackageDescriptor', {
           , true
         )
       }
-      
+
     , 'test standard main': function () {
         var expected = [ 'foobar!' ]
         this.runTest(
@@ -161,7 +161,7 @@ buster.testCase('PackageDescriptor', {
           , [ true ]
         )
       }
-      
+
     , 'test ender override main': function () {
         var expected = [ 'iiii am a mannnnn of constant sorrowwwww' ]
         this.runTest(
@@ -174,7 +174,7 @@ buster.testCase('PackageDescriptor', {
           , [ true ]
         )
       }
-      
+
     , 'test ender override main with "overlay->ender"': function () {
        var expected = [ 'iiii am a mannnnn of constant sorrowwwww' ]
         this.runTest(
@@ -187,7 +187,7 @@ buster.testCase('PackageDescriptor', {
           , [ true ]
         )
       }
-      
+
     , 'test if no override property then no override': function () {
         var expectedMain = [ 'wha?' ]
         this.runTest(
@@ -201,7 +201,7 @@ buster.testCase('PackageDescriptor', {
           , [ true, false ]
         )
       }
-      
+
     , 'test if no overlay override property then no override': function () {
         var expectedMain = [ 'wha?' ]
         this.runTest(
@@ -219,7 +219,7 @@ buster.testCase('PackageDescriptor', {
           , [ true, false ]
         )
       }
-      
+
     , 'test "ender" gets preference over "overlay->ender"': function () {
         var expectedMain = [ 'wha?' ]
         this.runTest(
