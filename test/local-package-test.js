@@ -76,7 +76,7 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({})
-                , 'index.js'     : '// index.js contents'
+                , 'index.js'     : '// index.js content'
               }
             , function (err, dir) {
                 refute(err)
@@ -84,8 +84,8 @@ buster.testCase('LocalPackage', {
                 async.series([ pkg.loadDescriptor.bind(pkg), pkg.loadSources.bind(pkg)], function (err) {
                   refute(err)
                   assert.equals(pkg.main, 'index')
-                  assert.equals(pkg.sources[pkg.main], '// index.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 1)
+                  assert.equals(pkg.sources[0].content, '// index.js content')
+                  assert.equals(pkg.sources.length, 1)
                   done()
                 })
               }
@@ -97,7 +97,7 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({ main: 'main' })
-                , 'main.js'      : '// main.js contents'
+                , 'main.js'      : '// main.js content'
               }
             , function (err, dir) {
                 refute(err)
@@ -105,8 +105,8 @@ buster.testCase('LocalPackage', {
                 async.series([ pkg.loadDescriptor.bind(pkg), pkg.loadSources.bind(pkg)], function (err) {
                   refute(err)
                   assert.equals(pkg.main, 'main')
-                  assert.equals(pkg.sources[pkg.main], '// main.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 1)
+                  assert.equals(pkg.sources[0].content, '// main.js content')
+                  assert.equals(pkg.sources.length, 1)
                   done()
                 })
               }
@@ -118,7 +118,7 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({ main: 'main.js' })
-                , 'main.js'      : '// main.js contents'
+                , 'main.js'      : '// main.js content'
               }
             , function (err, dir) {
                 refute(err)
@@ -126,8 +126,8 @@ buster.testCase('LocalPackage', {
                 async.series([ pkg.loadDescriptor.bind(pkg), pkg.loadSources.bind(pkg)], function (err) {
                   refute(err)
                   assert.equals(pkg.main, 'main')
-                  assert.equals(pkg.sources[pkg.main], '// main.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 1)
+                  assert.equals(pkg.sources[0].content, '// main.js content')
+                  assert.equals(pkg.sources.length, 1)
                   done()
                 })
               }
@@ -139,7 +139,7 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({ main: 'main' })
-                , 'main'         : { 'index.js' : '// main/index.js contents' }
+                , 'main'         : { 'index.js' : '// main/index.js content' }
               }
             , function (err, dir) {
                 refute(err)
@@ -148,8 +148,8 @@ buster.testCase('LocalPackage', {
                   if (err) throw(err)
                   refute(err)
                   assert.equals(pkg.main, 'main/index')
-                  assert.equals(pkg.sources[pkg.main], '// main/index.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 1)
+                  assert.equals(pkg.sources[0].content, '// main/index.js content')
+                  assert.equals(pkg.sources.length, 1)
                   done()
                 })
               }
@@ -161,8 +161,8 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({ main: '*.js' })
-                , 'main1.js'         : '// main1.js contents'
-                , 'main2.js'         : '// main2.js contents'
+                , 'main1.js'         : '// main1.js content'
+                , 'main2.js'         : '// main2.js content'
               }
             , function (err, dir) {
                 refute(err)
@@ -171,8 +171,8 @@ buster.testCase('LocalPackage', {
                   if (err) throw(err)
                   refute(err)
                   assert.equals(pkg.main, 'main')
-                  assert.equals(pkg.sources[pkg.main], '// main1.js contents\n\n// main2.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 1)
+                  assert.equals(pkg.sources[0].content, '// main1.js content\n\n// main2.js content')
+                  assert.equals(pkg.sources.length, 1)
                   done()
                 })
               }
@@ -188,10 +188,10 @@ buster.testCase('LocalPackage', {
                                      , bridge: "bridge.js"
                                      , files: ['file1.js', 'file2.js']
                                    })
-                , 'main.js'      : '// main.js contents'
-                , 'bridge.js'    : '// bridge.js contents'
-                , 'file1.js'     : '// file1.js contents'
-                , 'file2.js'     : '// file2.js contents'
+                , 'main.js'      : '// main.js content'
+                , 'bridge.js'    : '// bridge.js content'
+                , 'file1.js'     : '// file1.js content'
+                , 'file2.js'     : '// file2.js content'
               }
             , function (err, dir) {
                 refute(err)
@@ -201,11 +201,11 @@ buster.testCase('LocalPackage', {
                   refute(err)
                   assert.equals(pkg.main, 'main')
                   assert.equals(pkg.bridge, 'bridge')
-                  assert.equals(pkg.sources[pkg.main], '// main.js contents')
-                  assert.equals(pkg.sources[pkg.bridge], '// bridge.js contents')
-                  assert.equals(pkg.sources['file1'], '// file1.js contents')
-                  assert.equals(pkg.sources['file2'], '// file2.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 4)
+                  assert.equals(pkg.sources[0].content, '// main.js content')
+                  assert.equals(pkg.sources[1].content, '// bridge.js content')
+                  assert.equals(pkg.sources[2].content, '// file1.js content')
+                  assert.equals(pkg.sources[3].content, '// file2.js content')
+                  assert.equals(pkg.sources.length, 4)
                   done()
                 })
               }
@@ -221,11 +221,11 @@ buster.testCase('LocalPackage', {
                                      , bridge: "bridge.js"
                                      , files: ['file*.js']
                                    })
-                , 'main.js'      : '// main.js contents'
-                , 'bridge.js'    : '// bridge.js contents'
-                , 'file1.js'     : '// file1.js contents'
-                , 'file2.js'     : '// file2.js contents'
-                , 'skip.js'      : '// skip.js contents'
+                , 'main.js'      : '// main.js content'
+                , 'bridge.js'    : '// bridge.js content'
+                , 'file1.js'     : '// file1.js content'
+                , 'file2.js'     : '// file2.js content'
+                , 'skip.js'      : '// skip.js content'
               }
             , function (err, dir) {
                 refute(err)
@@ -235,11 +235,11 @@ buster.testCase('LocalPackage', {
                   refute(err)
                   assert.equals(pkg.main, 'main')
                   assert.equals(pkg.bridge, 'bridge')
-                  assert.equals(pkg.sources[pkg.main], '// main.js contents')
-                  assert.equals(pkg.sources[pkg.bridge], '// bridge.js contents')
-                  assert.equals(pkg.sources['file1'], '// file1.js contents')
-                  assert.equals(pkg.sources['file2'], '// file2.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 4)
+                  assert.equals(pkg.sources[0].content, '// main.js content')
+                  assert.equals(pkg.sources[1].content, '// bridge.js content')
+                  assert.equals(pkg.sources[2].content, '// file1.js content')
+                  assert.equals(pkg.sources[3].content, '// file2.js content')
+                  assert.equals(pkg.sources.length, 4)
                   done()
                 })
               }
@@ -255,11 +255,11 @@ buster.testCase('LocalPackage', {
                                      , bridge: "bridge.js"
                                      , files: ['*.js', 'skip.js', 'subdir']
                                    })
-                , 'main.js'      : '// main.js contents'
-                , 'bridge.js'    : '// bridge.js contents'
-                , 'file1.js'     : '// file1.js contents'
-                , 'file2.js'     : '// file2.js contents'
-                , 'subdir'       : { 'file3.js': '// subdir/file3.js contents' }
+                , 'main.js'      : '// main.js content'
+                , 'bridge.js'    : '// bridge.js content'
+                , 'file1.js'     : '// file1.js content'
+                , 'file2.js'     : '// file2.js content'
+                , 'subdir'       : { 'file3.js': '// subdir/file3.js content' }
               }
             , function (err, dir) {
                 refute(err)
@@ -269,12 +269,12 @@ buster.testCase('LocalPackage', {
                   refute(err)
                   assert.equals(pkg.main, 'main')
                   assert.equals(pkg.bridge, 'bridge')
-                  assert.equals(pkg.sources[pkg.main], '// main.js contents')
-                  assert.equals(pkg.sources[pkg.bridge], '// bridge.js contents')
-                  assert.equals(pkg.sources['file1'], '// file1.js contents')
-                  assert.equals(pkg.sources['file2'], '// file2.js contents')
-                  assert.equals(pkg.sources['subdir/file3'], '// subdir/file3.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 5)
+                  assert.equals(pkg.sources[0].content, '// main.js content')
+                  assert.equals(pkg.sources[1].content, '// bridge.js content')
+                  assert.equals(pkg.sources[2].content, '// file1.js content')
+                  assert.equals(pkg.sources[3].content, '// file2.js content')
+                  assert.equals(pkg.sources[4].content, '// subdir/file3.js content')
+                  assert.equals(pkg.sources.length, 5)
                   done()
                 })
               }
@@ -286,9 +286,9 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({ files: ['*'] })
-                , 'file1.js'     : '// file1.js contents'
-                , 'file2.js'     : '// file2.js contents'
-                , 'skip.jsjs'    : '// skip.jsjs contents'
+                , 'file1.js'     : '// file1.js content'
+                , 'file2.js'     : '// file2.js content'
+                , 'skip.jsjs'    : '// skip.jsjs content'
               }
             , function (err, dir) {
                 refute(err)
@@ -296,9 +296,9 @@ buster.testCase('LocalPackage', {
                 async.series([ pkg.loadDescriptor.bind(pkg), pkg.loadSources.bind(pkg)], function (err) {
                   if (err) throw(err)
                   refute(err)
-                  assert.equals(pkg.sources['file1'], '// file1.js contents')
-                  assert.equals(pkg.sources['file2'], '// file2.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 2)
+                  assert.equals(pkg.sources[0].content, '// file1.js content')
+                  assert.equals(pkg.sources[1].content, '// file2.js content')
+                  assert.equals(pkg.sources.length, 2)
                   done()
                 })
               }
@@ -311,16 +311,16 @@ buster.testCase('LocalPackage', {
             , {
                   'package.json' : JSON.stringify({ files: ['sub*1'] })
                 , 'subdir1': {
-                      'file1.js': '// file1.js contents'
+                      'file1.js': '// file1.js content'
                     , 'subdir2': {
-                          'file2.js': '// file2.js contents'
-                        , 'file3.js': '// file3.js contents'
+                          'file2.js': '// file2.js content'
+                        , 'file3.js': '// file3.js content'
                         , 'subdir3': {
-                              'file4.js': '// file4.js contents'
+                              'file4.js': '// file4.js content'
 
                           }
                       }
-                  } 
+                  }
               }
             , function (err, dir) {
                 refute(err)
@@ -328,11 +328,11 @@ buster.testCase('LocalPackage', {
                 async.series([ pkg.loadDescriptor.bind(pkg), pkg.loadSources.bind(pkg)], function (err) {
                   if (err) throw(err)
                   refute(err)
-                  assert.equals(pkg.sources['subdir1/file1'], '// file1.js contents')
-                  assert.equals(pkg.sources['subdir1/subdir2/file2'], '// file2.js contents')
-                  assert.equals(pkg.sources['subdir1/subdir2/file3'], '// file3.js contents')
-                  assert.equals(pkg.sources['subdir1/subdir2/subdir3/file4'], '// file4.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 4)
+                  assert.equals(pkg.sources[0].content, '// file1.js content')
+                  assert.equals(pkg.sources[1].content, '// file2.js content')
+                  assert.equals(pkg.sources[2].content, '// file3.js content')
+                  assert.equals(pkg.sources[3].content, '// file4.js content')
+                  assert.equals(pkg.sources.length, 4)
                   done()
                 })
               }
@@ -344,8 +344,8 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({ files: 'foo.js' })
-                , 'foo.js': '// foo.js contents'
-                , 'bar.js': '// bar.js contents'
+                , 'foo.js': '// foo.js content'
+                , 'bar.js': '// bar.js content'
               }
             , function (err, dir) {
                 refute(err)
@@ -356,22 +356,22 @@ buster.testCase('LocalPackage', {
 
                   pkg.loadSources(function (err) {
                     refute(err)
-                    assert.equals(pkg.sources['foo'], '// foo.js contents')
-                    assert.equals(Object.keys(pkg.sources).length, 1)
+                    assert.equals(pkg.sources[0].content, '// foo.js content')
+                    assert.equals(pkg.sources.length, 1)
                   })
 
                   // Change the files attribute and call again (shouldn't change sources)
                   pkg.descriptor.files = 'bar.js'
                   pkg.loadSources(function (err) {
                     refute(err)
-                    assert.equals(pkg.sources['foo'], '// foo.js contents')
-                    assert.equals(Object.keys(pkg.sources).length, 1)
+                    assert.equals(pkg.sources[0].content, '// foo.js content')
+                    assert.equals(pkg.sources.length, 1)
 
                     // Once more after completion
                     pkg.loadSources(function (err) {
                       refute(err)
-                      assert.equals(pkg.sources['foo'], '// foo.js contents')
-                      assert.equals(Object.keys(pkg.sources).length, 1)
+                      assert.equals(pkg.sources[0].content, '// foo.js content')
+                      assert.equals(pkg.sources.length, 1)
                       done()
                     })
                   })
@@ -385,16 +385,16 @@ buster.testCase('LocalPackage', {
               'ender-test-local-package'
             , {
                   'package.json' : JSON.stringify({ files: 'foo.js' })
-                , 'foo.js': '// foo.js contents'
-                , 'bar.js': '// bar.js contents'
+                , 'foo.js': '// foo.js content'
+                , 'bar.js': '// bar.js content'
               }
             , function (err, dir) {
                 refute(err)
                 var pkg = LocalPackage.create(dir)
                 async.series([ pkg.loadDescriptor.bind(pkg), pkg.loadSources.bind(pkg)], function (err) {
                   refute(err)
-                  assert.equals(pkg.sources['foo'], '// foo.js contents')
-                  assert.equals(Object.keys(pkg.sources).length, 1)
+                  assert.equals(pkg.sources[0].content, '// foo.js content')
+                  assert.equals(pkg.sources.length, 1)
 
                   // Unload the package
                   pkg.unload()
@@ -405,8 +405,8 @@ buster.testCase('LocalPackage', {
                     // Now we should load bar.js
                     pkg.loadSources(function (err) {
                       refute(err)
-                      assert.equals(pkg.sources['bar'], '// bar.js contents')
-                      assert.equals(Object.keys(pkg.sources).length, 1)
+                      assert.equals(pkg.sources[0].content, '// bar.js content')
+                      assert.equals(pkg.sources.length, 1)
                       done()
                     })
                   })
